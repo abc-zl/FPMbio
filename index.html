@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FPMlab | FeatModPairs Data Portal</title>
+    <meta
+      name="description"
+      content="FPMlab presents FeatModPairs method resources, public benchmark datasets, dynverse trajectory datasets, and a lung regeneration data collection."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="FPMlab home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>FPMlab</span>
+      </a>
+      <nav class="nav" aria-label="Dataset sections">
+        <a href="#features">Method</a>
+        <a href="#clustering">14 datasets</a>
+        <a href="#trajectory">20 trajectories</a>
+        <a href="#spatial">Brain slice</a>
+        <a href="#lung">Mouse PNX</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">FeatModPairs resource portal</p>
+          <h1>FPMlab</h1>
+          <p class="lead">
+            A curated portal for FeatModPairs benchmark datasets, spatial
+            transcriptomics validation, mouse pneumonectomy resources,
+            and candidate genes emerging from the analysis.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#clustering">Explore datasets</a>
+            <a class="button secondary" href="#lung">Open mouse PNX</a>
+          </div>
+        </div>
+
+        <section class="feature-carousel" aria-label="FPMlab featured sections">
+          <article class="slide is-active" data-target="#clustering">
+            <img src="assets/fig3-benchmark-heatmaps.png" alt="Benchmark ARI and NMI heatmaps" />
+            <div class="slide-shade"></div>
+            <div class="slide-copy">
+              <span>Benchmark catalogue</span>
+              <h2>Gold-standard benchmark panels anchor the 14-dataset study catalogue.</h2>
+            </div>
+          </article>
+          <article class="slide" data-target="#clustering">
+            <img src="assets/fig3-mean-rank.png" alt="Mean-rank benchmark summary" />
+            <div class="slide-shade"></div>
+            <div class="slide-copy">
+              <span>Benchmark ranking</span>
+              <h2>Mean-rank summary highlights FeatModPairs performance across public datasets.</h2>
+            </div>
+          </article>
+          <article class="slide" data-target="#spatial">
+            <img src="assets/dlpfc-four-slices.png" alt="DLPFC 151673 spatial domain validation" />
+            <div class="slide-shade"></div>
+            <div class="slide-copy">
+              <span>Spatial validation</span>
+              <h2>DLPFC 151673 brain section with Ground truth, FeatModPairs, SCT, and Seurat.</h2>
+            </div>
+          </article>
+          <article class="slide" data-target="#lung">
+            <img src="assets/fig2-workflow.svg" alt="Mouse pneumonectomy experimental workflow" />
+            <div class="slide-shade"></div>
+            <div class="slide-copy">
+              <span>Mouse PNX workflow</span>
+              <h2>The mouse PNX workflow connects surgery, tissue validation, function, sorting, and sequencing.</h2>
+            </div>
+          </article>
+          <div class="carousel-indicator" aria-label="Carousel position">
+            <button class="dot is-active" type="button" aria-label="Benchmark catalogue"></button>
+            <button class="dot" type="button" aria-label="Benchmark ranking"></button>
+            <button class="dot" type="button" aria-label="Spatial validation"></button>
+            <button class="dot" type="button" aria-label="Mouse pneumonectomy atlas"></button>
+          </div>
+        </section>
+      </section>
+
+      <section class="quick-jump" aria-label="Section jump links">
+        <a href="#features"><span>01</span>Algorithm functions</a>
+        <a href="#clustering"><span>02</span>14 dataset study cards</a>
+        <a href="#trajectory"><span>03</span>20 dynverse source records</a>
+        <a href="#spatial"><span>04</span>DLPFC brain slice</a>
+        <a href="#lung"><span>05</span>Mouse PNX workflow</a>
+      </section>
+
+      <section class="section method" id="features">
+        <div class="section-title">
+          <p class="eyebrow">FPMlab sections</p>
+          <h2>What FeatModPairs does</h2>
+          <p>
+            The page structure follows what FeatModPairs contributes: stable
+            references, ratio transformation, multi-view extraction, projection
+            stability, trajectory recovery, and biological interpretation.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <span>01</span>
+            <h3>Stable Reference Modules</h3>
+            <p>Control genes are selected for abundance and low dispersion, then grouped into multiple endogenous modules.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Relative Expression Geometry</h3>
+            <p>Each gene is rewritten as a ratio to module-level counts, reducing raw library-size pull.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Module-wise Feature Learning</h3>
+            <p>LOESS variance modeling and PCA are performed in each reference view before integration.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Embedding-ready Output</h3>
+            <p>The concatenated representation feeds KNN, SNN, UMAP, Leiden, k-means, and Slingshot workflows.</p>
+          </article>
+          <article>
+            <span>05</span>
+            <h3>Projection and Spatial Fidelity</h3>
+            <p>Projected labels and physical tissue neighborhoods can be evaluated after nonlinear visualization.</p>
+          </article>
+          <article>
+            <span>06</span>
+            <h3>Transition-state Discovery</h3>
+            <p>The method is tuned for nearby states, transition widths, branch continuity, and interpretable pseudotime.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section data-section" id="clustering">
+        <div class="section-title compact">
+          <p class="eyebrow">Dataset study cards</p>
+          <h2>Fourteen golden public scRNA-seq benchmark datasets</h2>
+          <p>
+            These gold-standard datasets provide high-quality labels and
+            diverse biological systems for judging whether a feature method can
+            preserve real cell identities. Each card lists the original paper,
+            species, tissue or system, accession, repository, protocol, and
+            source URL.
+          </p>
+        </div>
+        <div class="section-toolbar">
+          <div class="count-pill"><strong id="clusterCount">14</strong><span>datasets</span></div>
+          <a class="text-link" href="data/Supplementary_Table_S1_dimensionality_benchmark_datasets.csv">Download S1 CSV</a>
+        </div>
+        <div class="benchmark-panels">
+          <figure>
+            <img src="assets/fig3-benchmark-heatmaps.png" alt="ARI and NMI benchmark heatmaps" />
+            <figcaption>Dataset-by-dataset ARI and NMI benchmark heatmaps.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/fig3-mean-rank.png" alt="Mean-rank benchmark panel" />
+            <figcaption>Mean-rank summary across benchmark datasets and metrics.</figcaption>
+          </figure>
+        </div>
+        <div class="benchmark-explainer">
+          <article>
+            <span>Benchmark view</span>
+            <h3>ARI and NMI heatmaps</h3>
+            <p>
+              The heatmaps compare how closely each method recovers the known
+              cell labels in every golden dataset. ARI and NMI reward agreement
+              with curated annotations while making differences between
+              datasets easy to scan.
+            </p>
+          </article>
+          <article>
+            <span>Rank view</span>
+            <h3>Mean-rank summary</h3>
+            <p>
+              The rank panel compresses performance across datasets and metrics.
+              Lower mean rank indicates a method that stays competitive across
+              multiple tissues, species, and sequencing protocols rather than
+              winning only one narrow case.
+            </p>
+          </article>
+        </div>
+        <div class="method-links" aria-label="Comparison method paper links">
+          <div class="method-links-copy">
+            <p class="eyebrow">Comparison method papers</p>
+            <h3>Source papers behind the benchmark methods</h3>
+            <p>
+              Graph variants in the benchmark use the corresponding Seurat or
+              SCTransform representations before graph clustering.
+            </p>
+          </div>
+          <a href="https://doi.org/10.1038/nbt.3192" target="_blank" rel="noreferrer">Seurat</a>
+          <a href="https://doi.org/10.1016/j.cell.2019.05.031" target="_blank" rel="noreferrer">Seurat integration</a>
+          <a href="https://doi.org/10.1186/s13059-019-1874-1" target="_blank" rel="noreferrer">SCTransform</a>
+          <a href="https://doi.org/10.1038/nmeth.4236" target="_blank" rel="noreferrer">SC3</a>
+          <a href="https://doi.org/10.1038/s41467-018-03405-7" target="_blank" rel="noreferrer">DrImpute</a>
+          <a href="https://doi.org/10.1186/s13059-017-1382-0" target="_blank" rel="noreferrer">Scanpy</a>
+          <a href="https://doi.org/10.1038/s41598-019-41695-z" target="_blank" rel="noreferrer">Leiden clustering</a>
+          <a href="https://doi.org/10.21105/joss.00861" target="_blank" rel="noreferrer">UMAP</a>
+          <a href="https://doi.org/10.1186/s12859-018-2497-6" target="_blank" rel="noreferrer">Slingshot</a>
+          <a href="https://doi.org/10.1093/nar/gkw430" target="_blank" rel="noreferrer">TSCAN</a>
+          <a href="https://doi.org/10.1038/nbt.2859" target="_blank" rel="noreferrer">Monocle</a>
+          <a href="https://doi.org/10.1038/s41592-024-02201-0" target="_blank" rel="noreferrer">scGPT</a>
+        </div>
+        <div class="dataset-grid study-grid" id="clusterGrid"></div>
+      </section>
+
+      <section class="section data-section alternate" id="trajectory">
+        <div class="section-title compact">
+          <p class="eyebrow">Trajectory source records</p>
+          <h2>Twenty dynverse gold-standard trajectory tasks</h2>
+          <p>
+            Each task links to the dynverse Zenodo record and its dataset file,
+            with cells, genes, milestones, and benchmark article information.
+          </p>
+        </div>
+        <div class="section-toolbar">
+          <div class="count-pill"><strong id="trajectoryCount">20</strong><span>tasks</span></div>
+          <a class="text-link" href="data/Supplementary_Table_S2_trajectory_benchmark_datasets.csv">Download S2 CSV</a>
+        </div>
+        <div class="dataset-grid study-grid" id="trajectoryGrid"></div>
+      </section>
+
+      <section class="section spatial" id="spatial">
+        <div class="section-title">
+          <p class="eyebrow">Spatial transcriptomics validation</p>
+          <h2>DLPFC 151673 brain slice dataset</h2>
+          <p>
+            This section highlights the spatial validation dataset used to test
+            whether FeatModPairs preserves physical tissue-domain structure in a
+            Visium brain section.
+          </p>
+        </div>
+        <figure class="wide-figure">
+          <img src="assets/dlpfc-four-slices.png" alt="DLPFC 151673 spatial domains on histology" />
+          <figcaption>DLPFC 151673 spatial domains on histology: Ground truth, FeatModPairs, SCT, and Seurat.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section lung" id="lung">
+        <div class="section-title">
+          <p class="eyebrow">Mouse lung pneumonectomy dataset</p>
+          <h2>Mouse lung resection workflow resource</h2>
+          <p>
+            This section follows the main mouse pneumonectomy study: experiment
+            design and validation, with downstream candidate genes
+            summarized as an interactive bubble skeleton.
+          </p>
+        </div>
+
+        <div class="figure-strip single-figure">
+          <figure><img src="assets/fig2-workflow.svg" alt="Mouse pneumonectomy experimental workflow" /><figcaption>Experimental and validation workflow for mouse pneumonectomy</figcaption></figure>
+        </div>
+
+        <div class="workflow">
+          <article><span>1</span><h3>Pneumonectomy model</h3><p>Unilateral left pneumonectomy with sham operation controls and postoperative time-series sampling.</p></article>
+          <article><span>2</span><h3>Tissue and function readouts</h3><p>H&E, immunofluorescence, panoramic lobe imaging, KI67/SFTPC/Nkx2-1 quantification, and pulmonary function.</p></article>
+          <article><span>3</span><h3>Single-cell sequencing</h3><p>Whole-lung and AT2-enriched cell fractions were profiled to build a regeneration atlas.</p></article>
+          <article><span>4</span><h3>FeatModPairs embedding</h3><p>The method resolved major lung populations, sample shifts, silhouette structure, and downstream state programs.</p></article>
+          <article><span>5</span><h3>Epithelial repair axis</h3><p>AT2-core, Krt8-positive bridge-transition, and AT1-core regions were connected by pseudotime.</p></article>
+          <article><span>6</span><h3>Myeloid remodeling axis</h3><p>Mono-core, remodeling-transition, and macrophage-rich states formed an ordered immune continuum.</p></article>
+        </div>
+
+        <div class="gene-section">
+          <div class="section-title compact">
+            <p class="eyebrow">Candidate gene map</p>
+            <h2>Bubble skeleton of newly highlighted genes</h2>
+            <p>
+              Each bubble opens a separate gene page with known function,
+              related literature context, and the potential role suggested by
+              the FeatModPairs mouse PNX analysis.
+            </p>
+          </div>
+          <div class="gene-bubble-map" id="geneBubbleMap" aria-label="Candidate gene bubble skeleton"></div>
+        </div>
+
+        <div class="resource-panel">
+          <div>
+            <p class="eyebrow">Files to connect</p>
+            <h2>Feat package preview</h2>
+            <p>Formal release links are intentionally hidden for now.</p>
+          </div>
+          <div class="resource-list">
+            <a href="data/feat-package-intro.txt">
+              <span>Feat package introduction</span>
+              <strong>preview txt only</strong>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>FPMlab</strong>
+      <span>FeatModPairs data portal for datasets, workflows, benchmark views, and downloadable resources.</span>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
