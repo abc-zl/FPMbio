@@ -114,9 +114,10 @@ function fpmParseCsv(text) {
   let row = [];
   let cell = "";
   let quoted = false;
-  for (let i = 0; i < text.length; i += 1) {
-    const char = text[i];
-    const next = text[i + 1];
+  const cleanText = text.replace(/^\uFEFF/, "");
+  for (let i = 0; i < cleanText.length; i += 1) {
+    const char = cleanText[i];
+    const next = cleanText[i + 1];
     if (char === '"' && quoted && next === '"') {
       cell += '"';
       i += 1;
@@ -136,30 +137,45 @@ function fpmParseCsv(text) {
     }
   }
   if (cell || row.length) rows.push([...row, cell]);
-  const headers = rows.shift().map((h) => h.trim());
-  return rows.map((values) => Object.fromEntries(headers.map((header, index) => [header, values[index] || ""])));
+  const headers = rows.shift().map((h) => h.replace(/^\uFEFF/, "").trim());
+  return rows.map((values) => Object.fromEntries(headers.map((header, index) => [header, (values[index] || "").trim()])));
 }
 
 function fpmShortStudy(study) {
   return study.replace(/\s*\((Cell Systems|Nature|PNAS|Science|Nature Methods|Genome Biology|Cell|Nature Biotechnology|Bioinformatics|Journal.*?)\,?\s*\d{4}\)/, "");
 }
 
+function fpmValue(item, key, fallback = "Not specified") {
+  const direct = item[key];
+  if (direct !== undefined && direct !== null && String(direct).trim()) return direct;
+  const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, "");
+  const foundKey = Object.keys(item).find((candidate) => candidate.toLowerCase().replace(/[^a-z0-9]/g, "") === normalizedKey);
+  const found = foundKey ? item[foundKey] : "";
+  return found !== undefined && found !== null && String(found).trim() ? found : fallback;
+}
+
+function fpmOptionalLink(href, label, className = "card-link") {
+  if (!href || href === "Not specified") return "";
+  return `<a class="${className}" href="${href}" target="_blank" rel="noopener">${label}</a>`;
+}
+
 function fpmStudyCard(item) {
+  const sourceUrl = fpmValue(item, "Source URL", "");
   return `
     <article class="data-card study-card">
-      <div class="card-head"><span class="tag">${item.Species}</span><span>${item.Repository}</span></div>
-      <h3>${item.Dataset}</h3>
-      <p class="study-title">${fpmShortStudy(item["Original study"] || "")}</p>
+      <div class="card-head"><span class="tag">${fpmValue(item, "Species")}</span><span>${fpmValue(item, "Repository")}</span></div>
+      <h3>${fpmValue(item, "Dataset", "Dataset")}</h3>
+      <p class="study-title">${fpmShortStudy(fpmValue(item, "Original study", ""))}</p>
       <dl>
-        <div><dt>Tissue/System</dt><dd>${item.Tissue_or_system}</dd></div>
-        <div><dt>Protocol</dt><dd>${item.Protocol}</dd></div>
-        <div><dt>Accession</dt><dd>${item.Accession}</dd></div>
-        <div><dt>Cells</dt><dd>${numberFormat(item.Cells)}</dd></div>
-        <div><dt>Genes</dt><dd>${numberFormat(item.Genes)}</dd></div>
-        <div><dt>Labels</dt><dd>${item.Labels}</dd></div>
+        <div><dt>Tissue/System</dt><dd>${fpmValue(item, "Tissue_or_system")}</dd></div>
+        <div><dt>Protocol</dt><dd>${fpmValue(item, "Protocol")}</dd></div>
+        <div><dt>Accession</dt><dd>${fpmValue(item, "Accession")}</dd></div>
+        <div><dt>Cells</dt><dd>${numberFormat(fpmValue(item, "Cells", "")) || "Not specified"}</dd></div>
+        <div><dt>Genes</dt><dd>${numberFormat(fpmValue(item, "Genes", "")) || "Not specified"}</dd></div>
+        <div><dt>Labels</dt><dd>${fpmValue(item, "Labels")}</dd></div>
       </dl>
       <div class="card-actions">
-        <a class="card-link" href="${item["Source URL"]}" target="_blank" rel="noopener">Source link</a>
+        ${fpmOptionalLink(sourceUrl, "Source link")}
         <a class="card-link ghost" href="data/Supplementary_Table_S1_dimensionality_benchmark_datasets.csv">S1 row</a>
       </div>
     </article>
@@ -167,20 +183,22 @@ function fpmStudyCard(item) {
 }
 
 function fpmTrajectoryCard(item) {
+  const sourceUrl = fpmValue(item, "Source URL", "");
+  const articleUrl = fpmValue(item, "Benchmark article URL", "");
   return `
     <article class="data-card study-card trajectory-card">
-      <div class="card-head"><span class="tag">${item["Benchmark tier"]}</span><span>${item.Reference}</span></div>
-      <h3>${item.Dataset}</h3>
-      <p class="study-title">${item["Source collection"]}</p>
+      <div class="card-head"><span class="tag">${fpmValue(item, "Benchmark tier")}</span><span>${fpmValue(item, "Reference")}</span></div>
+      <h3>${fpmValue(item, "Dataset", "Trajectory task")}</h3>
+      <p class="study-title">${fpmValue(item, "Source collection")}</p>
       <dl>
-        <div><dt>Cells</dt><dd>${numberFormat(item.Cells)}</dd></div>
-        <div><dt>Genes</dt><dd>${numberFormat(item.Genes)}</dd></div>
-        <div><dt>Milestones</dt><dd>${item.Milestones}</dd></div>
-        <div><dt>File</dt><dd>${item["Dataset file path"]}</dd></div>
+        <div><dt>Cells</dt><dd>${numberFormat(fpmValue(item, "Cells", "")) || "Not specified"}</dd></div>
+        <div><dt>Genes</dt><dd>${numberFormat(fpmValue(item, "Genes", "")) || "Not specified"}</dd></div>
+        <div><dt>Milestones</dt><dd>${fpmValue(item, "Milestones")}</dd></div>
+        <div><dt>File</dt><dd>${fpmValue(item, "Dataset file path")}</dd></div>
       </dl>
       <div class="card-actions">
-        <a class="card-link" href="${item["Source URL"]}" target="_blank" rel="noopener">Download RDS</a>
-        <a class="card-link ghost" href="${item["Benchmark article URL"]}" target="_blank" rel="noopener">Article</a>
+        ${fpmOptionalLink(sourceUrl, "Download RDS")}
+        ${fpmOptionalLink(articleUrl, "Article", "card-link ghost")}
       </div>
     </article>
   `;
