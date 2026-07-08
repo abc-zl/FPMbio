@@ -15,6 +15,23 @@ const clusterDatasets = [
   { dataset: "patel", cells: "430", genes: "5948", labels: "5", object: "SingleCellExperiment", use: "Clustering + embedding" },
 ];
 
+const datasetSourceLinks = {
+  baron_human: "https://hemberg-lab.github.io/scRNA.seq.datasets/human/pancreas/",
+  baron_mouse: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/pancreas/",
+  camp1: "https://hemberg-lab.github.io/scRNA.seq.datasets/human/liver/",
+  camp2: "https://hemberg-lab.github.io/scRNA.seq.datasets/human/brain/",
+  chen: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/brain/",
+  deng_reads: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/edev/",
+  grun: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/hsc/",
+  klein: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/esc/",
+  kolodziejczyk: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/esc/",
+  li: "https://hemberg-lab.github.io/scRNA.seq.datasets/human/tissues/",
+  manno_human: "https://hemberg-lab.github.io/scRNA.seq.datasets/human/brain/",
+  manno_mouse: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/brain/",
+  marques: "https://hemberg-lab.github.io/scRNA.seq.datasets/mouse/brain/",
+  patel: "https://hemberg-lab.github.io/scRNA.seq.datasets/human/tissues/",
+};
+
 const trajectoryDatasets = [
   { dataset: "aging-hsc-old_kowalczyk", reference: "kowalczyk", cells: "2863", genes: "873", milestones: "4" },
   { dataset: "aging-hsc-young_kowalczyk", reference: "kowalczyk", cells: "2406", genes: "493", milestones: "4" },
@@ -38,6 +55,10 @@ const trajectoryDatasets = [
   { dataset: "psc-astrocyte-maturation-neuron_sloan", reference: "sloan", cells: "1534", genes: "192", milestones: "5" },
 ];
 
+const trajectorySourceLinks = Object.fromEntries(
+  trajectoryDatasets.map((item) => [item.dataset, "https://zenodo.org/records/1443566"])
+);
+
 function numberFormat(value) {
   return Number(value).toLocaleString("en-US");
 }
@@ -50,13 +71,13 @@ function renderClusterCard(item) {
         <span>${item.object}</span>
       </div>
       <h3>${item.dataset}</h3>
-      <p>${item.use}. Source/accession/download URL can be linked here when public release details are finalized.</p>
+      <p>${item.use}. Original study, accession, repository, and source URL are listed in S1.</p>
       <dl>
         <div><dt>Cells</dt><dd>${numberFormat(item.cells)}</dd></div>
         <div><dt>Genes</dt><dd>${numberFormat(item.genes)}</dd></div>
         <div><dt>Labels</dt><dd>${item.labels}</dd></div>
       </dl>
-      <a class="card-link" href="data/Supplementary_Table_S1_dimensionality_benchmark_datasets.csv">Dataset table</a>
+      <a class="card-link" href="${datasetSourceLinks[item.dataset] || "data/Supplementary_Table_S1_dimensionality_benchmark_datasets.csv"}" target="_blank" rel="noopener">Open source website</a>
     </article>
   `;
 }
@@ -75,7 +96,7 @@ function renderTrajectoryCard(item) {
         <div><dt>Genes</dt><dd>${numberFormat(item.genes)}</dd></div>
         <div><dt>Milestones</dt><dd>${item.milestones}</dd></div>
       </dl>
-      <a class="card-link" href="data/Supplementary_Table_S2_trajectory_benchmark_datasets.csv">Dataset table</a>
+      <a class="card-link" href="${trajectorySourceLinks[item.dataset] || "https://zenodo.org/records/1443566"}" target="_blank" rel="noopener">Open source website</a>
     </article>
   `;
 }
@@ -192,16 +213,15 @@ function fpmStudyCard(item) {
         <div><dt>Labels</dt><dd>${fpmValue(item, "Labels")}</dd></div>
       </dl>
       <div class="card-actions">
-        ${fpmOptionalLink(sourceUrl, "Source link")}
-        <a class="card-link ghost" href="data/Supplementary_Table_S1_dimensionality_benchmark_datasets.csv">S1 row</a>
+        ${fpmOptionalLink(sourceUrl, "Open source website")}
       </div>
     </article>
   `;
 }
 
 function fpmTrajectoryCard(item) {
+  const sourceRecordUrl = fpmValue(item, "Source record URL", "");
   const sourceUrl = fpmValue(item, "Source URL", "");
-  const articleUrl = fpmValue(item, "Benchmark article URL", "");
   const system = fpmTrajectorySystem(fpmValue(item, "Dataset", ""));
   return `
     <article class="data-card study-card trajectory-card">
@@ -215,8 +235,7 @@ function fpmTrajectoryCard(item) {
         <div><dt>Biological system</dt><dd>${system}</dd></div>
       </dl>
       <div class="card-actions">
-        ${fpmOptionalLink(sourceUrl, "Download RDS")}
-        ${fpmOptionalLink(articleUrl, "Article", "card-link ghost")}
+        ${fpmOptionalLink(sourceRecordUrl || sourceUrl, "Open source website")}
       </div>
     </article>
   `;
