@@ -159,6 +159,23 @@ function fpmOptionalLink(href, label, className = "card-link") {
   return `<a class="${className}" href="${href}" target="_blank" rel="noopener">${label}</a>`;
 }
 
+function fpmTrajectorySystem(dataset) {
+  const text = String(dataset || "").toLowerCase();
+  if (text.includes("aging-hsc")) return "Aging hematopoietic stem cells";
+  if (text.includes("cell-cycle")) return "Cell-cycle progression";
+  if (text.includes("dendritic-cells")) return "Developing dendritic cells";
+  if (text.includes("epidermis-hair")) return "Epidermis and hair follicle";
+  if (text.includes("fibroblast-reprogramming")) return "Fibroblast reprogramming";
+  if (text.includes("germline-human")) return "Human germline development";
+  if (text.includes("hematopoiesis")) return "Hematopoiesis";
+  if (text.includes("mesoderm-development")) return "Mesoderm development";
+  if (text.includes("myoblast-differentiation")) return "Myoblast differentiation";
+  if (text.includes("nkt-differentiation")) return "NKT differentiation";
+  if (text.includes("olfactory-projection-neurons")) return "Olfactory projection neurons";
+  if (text.includes("psc-astrocyte")) return "PSC astrocyte maturation";
+  return fpmValue({ Dataset: dataset }, "Dataset", "Trajectory system");
+}
+
 function fpmStudyCard(item) {
   const sourceUrl = fpmValue(item, "Source URL", "");
   return `
@@ -185,6 +202,7 @@ function fpmStudyCard(item) {
 function fpmTrajectoryCard(item) {
   const sourceUrl = fpmValue(item, "Source URL", "");
   const articleUrl = fpmValue(item, "Benchmark article URL", "");
+  const system = fpmTrajectorySystem(fpmValue(item, "Dataset", ""));
   return `
     <article class="data-card study-card trajectory-card">
       <div class="card-head"><span class="tag">${fpmValue(item, "Benchmark tier")}</span><span>${fpmValue(item, "Reference")}</span></div>
@@ -193,8 +211,8 @@ function fpmTrajectoryCard(item) {
       <dl>
         <div><dt>Cells</dt><dd>${numberFormat(fpmValue(item, "Cells", "")) || "Not specified"}</dd></div>
         <div><dt>Genes</dt><dd>${numberFormat(fpmValue(item, "Genes", "")) || "Not specified"}</dd></div>
-        <div><dt>Milestones</dt><dd>${fpmValue(item, "Milestones")}</dd></div>
-        <div><dt>Evaluation use</dt><dd>${fpmValue(item, "Primary use")}</dd></div>
+        <div><dt>Gold labels</dt><dd>${fpmValue(item, "Milestones")} milestones</dd></div>
+        <div><dt>Biological system</dt><dd>${system}</dd></div>
       </dl>
       <div class="card-actions">
         ${fpmOptionalLink(sourceUrl, "Download RDS")}
