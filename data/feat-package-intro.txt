@@ -1,0 +1,1 @@
+﻿FeatModPairs package placeholder\n\nThis page will later provide the official FeatModPairs package release, source repository, installation instructions, example workflows, and citation information.\n\nCurrent status: preview-only introduction file. Formal package download links are intentionally not published yet.
