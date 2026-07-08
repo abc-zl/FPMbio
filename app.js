@@ -194,7 +194,7 @@ function fpmTrajectoryCard(item) {
         <div><dt>Cells</dt><dd>${numberFormat(fpmValue(item, "Cells", "")) || "Not specified"}</dd></div>
         <div><dt>Genes</dt><dd>${numberFormat(fpmValue(item, "Genes", "")) || "Not specified"}</dd></div>
         <div><dt>Milestones</dt><dd>${fpmValue(item, "Milestones")}</dd></div>
-        <div><dt>File</dt><dd>${fpmValue(item, "Dataset file path")}</dd></div>
+        <div><dt>Evaluation use</dt><dd>${fpmValue(item, "Primary use")}</dd></div>
       </dl>
       <div class="card-actions">
         ${fpmOptionalLink(sourceUrl, "Download RDS")}
